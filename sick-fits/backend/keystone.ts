@@ -1,6 +1,12 @@
 // import .env values to use
 import 'dotenv/config';
 import { config, createSchema } from '@keystone-next/keystone/schema';
+import { User } from './schemas/User';
+
+/**
+ * Keystone configuration - you need to create this file
+ * Unless you're using nodemon or hot reload somehow, you need to restart the server on every change
+ */
 
 const databaseURL =
   process.env.DATABASE_URL || 'mongodb://localhost/keystone-sick-fits-tutorial';
@@ -24,6 +30,7 @@ export default config({
     // TODO: add data seeding here
   },
   lists: createSchema({
+    User,
     // schema items go here. lists are resources/entities in the db
   }),
   ui: {
