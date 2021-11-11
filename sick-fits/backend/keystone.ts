@@ -1,6 +1,11 @@
 // import .env values to use
 import 'dotenv/config';
 import { config, createSchema } from '@keystone-next/keystone/schema';
+import { createAuth } from '@keystone-next/auth';
+import {
+  statelessSessions,
+  withItemData,
+} from '@keystone-next/keystone/session';
 import { User } from './schemas/User';
 
 /**
@@ -16,26 +21,39 @@ const sessionConfig = {
   secret: process.env.COOKIE_SECRET, // unique to a user
 };
 
-// keystone config
-export default config({
-  server: {
-    cors: {
-      origin: [process.env.FRONTEND_URL],
-      credentials: true, // passes cookie
-    },
-  },
-  db: {
-    adapter: 'mongoose',
-    url: databaseURL,
-    // TODO: add data seeding here
-  },
-  lists: createSchema({
-    User,
-    // schema items go here. lists are resources/entities in the db
-  }),
-  ui: {
-    // TODO: change this for roles
-    isAccessAllowed: () => true,
-  },
-  // TODO: add session values here
+// wrap config below with this for auth
+const { withAuth } = createAuth({
+  listKey: 'User', // which schema is the user schema
+  identityField: 'email', // which field identifies the person, ie what do they login with
+  secretField: 'password',
+  initFirstItem: { fields: ['name', 'email', 'password'] }, // allows insertion of these without auth
 });
+
+// keystone config
+export default withAuth(
+  config({
+    server: {
+      cors: {
+        origin: [process.env.FRONTEND_URL],
+        credentials: true, // passes cookie
+      },
+    },
+    db: {
+      adapter: 'mongoose',
+      url: databaseURL,
+      // TODO: add data seeding here
+    },
+    lists: createSchema({
+      User,
+      // schema items go here. lists are resources/entities in the db
+    }),
+    ui: {
+      // show ui only for users that pass this test
+      isAccessAllowed: ({ session }) => !!session?.data, // if session and there is data they are logged in
+    },
+    session: withItemData(statelessSessions(sessionConfig), {
+      // this is a graphql query
+      User: 'id', // pass id field and queried data with the session for access, useful for middleware and present on request
+    }),
+  })
+);
