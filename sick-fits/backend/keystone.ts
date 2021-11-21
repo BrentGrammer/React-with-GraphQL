@@ -7,6 +7,8 @@ import {
   withItemData,
 } from '@keystone-next/keystone/session';
 import { User } from './schemas/User';
+import { Product } from './schemas/Product';
+import { ProductImage } from './schemas/ProductImage';
 
 /**
  * Keystone configuration - you need to create this file
@@ -45,6 +47,8 @@ export default withAuth(
     },
     lists: createSchema({
       User,
+      Product,
+      ProductImage,
       // schema items go here. lists are resources/entities in the db
     }),
     ui: {
