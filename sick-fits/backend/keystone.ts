@@ -6,6 +6,7 @@ import {
   statelessSessions,
   withItemData,
 } from '@keystone-next/keystone/session';
+import { KeystoneContext } from '@keystone-next/types';
 import { User } from './schemas/User';
 import { Product } from './schemas/Product';
 import { ProductImage } from './schemas/ProductImage';
@@ -62,7 +63,8 @@ export default withAuth(
     }),
     ui: {
       // show ui only for users that pass this test
-      isAccessAllowed: ({ session }) => !!session?.data, // if session and there is data they are logged in
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      isAccessAllowed: ({ session }: KeystoneContext) => !!session?.data, // if session and there is data they are logged in
     },
     session: withItemData(statelessSessions(sessionConfig), {
       // this is a graphql query
