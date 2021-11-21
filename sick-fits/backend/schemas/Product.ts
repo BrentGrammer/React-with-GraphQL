@@ -1,4 +1,4 @@
-import { integer, select, text } from '@keystone-next/fields';
+import { integer, relationship, select, text } from '@keystone-next/fields';
 import { list } from '@keystone-next/keystone/schema';
 /**
  * configuration for the Product schema with settings for CMS fields
@@ -11,6 +11,18 @@ export const Product = list({
     description: text({
       ui: {
         displayMode: 'textarea', // in CMS
+      },
+    }),
+    // 2 way relationship with a productImage record - that schema also has a reference to this photo field
+    photo: relationship({
+      ref: 'ProductImage.product',
+      // this makes it easier to add a image to the product in the CMS
+      ui: {
+        displayMode: 'cards',
+        cardFields: ['image', 'altText'],
+        // which fields to edit
+        inlineCreate: { fields: ['image', 'altText'] },
+        inlineEdit: { fields: ['image', 'altText'] },
       },
     }),
     // don't want to show product if it is under development/draft
