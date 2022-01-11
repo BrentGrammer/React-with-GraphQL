@@ -14,3 +14,8 @@
 - `Prop `className` did not match` serverside matching error:
   - stop frontend
   - delete the .next folder and restart frontend backend (cache issue?)
+
+# Tips
+
+- use fieldset to disable multiple fields in form while loading:
+  `<fieldset disabled={loading} aria-busy={loading}>`
