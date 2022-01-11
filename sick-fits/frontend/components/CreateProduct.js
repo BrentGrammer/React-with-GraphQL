@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
+import Router from 'next/router';
 import useForm from '../lib/useForm';
 import DisplayError from './ErrorMessage';
 import Form from './styles/Form';
@@ -61,6 +62,7 @@ export default function CreateProduct() {
         // res.data will have the query data and record fields
         const res = await createProduct(); // you can also pass in variables here if needed, { variables: ... }
         clearForm();
+        Router.push({ pathname: `/product/${res.data.createProduct.id}` });
       }}
     >
       <DisplayError error={error} />
