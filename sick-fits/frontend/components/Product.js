@@ -3,6 +3,7 @@ import ItemStyles from './styles/ItemStyles';
 import TitleStyles from './styles/Title';
 import PriceTagStyles from './styles/PriceTag';
 import formatMoney from '../lib/formatMoney';
+import DeleteProduct from './DeleteProduct';
 
 /* eslint-disable react/prop-types */
 export default function Product({ product }) {
@@ -22,6 +23,7 @@ export default function Product({ product }) {
         <Link href={{ pathname: 'update', query: { id: product.id } }}>
           Edit
         </Link>
+        <DeleteProduct id={product.id}>Delete</DeleteProduct>
       </div>
     </ItemStyles>
   );
