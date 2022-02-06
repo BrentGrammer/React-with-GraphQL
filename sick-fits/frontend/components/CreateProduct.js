@@ -77,6 +77,17 @@ export default function CreateProduct() {
             onChange={handleChange}
           />
         </label>
+        <label htmlFor="image">
+          Name
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="name"
+            value={inputs.name}
+            onChange={handleChange}
+          />
+        </label>
         <label htmlFor="name">
           Price
           <input
