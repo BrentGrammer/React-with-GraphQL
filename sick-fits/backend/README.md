@@ -18,6 +18,7 @@ See browser Keystone CMS dashboard in `http://localhost:3000`
 
 - Open MongoDBCompass and enter credentials (database string)
   - Database registered with Mongo Atlas
+  - login to mongo atlas with google brentonmarquez@gmail.com
 
 # GraphQL API
 

@@ -8,7 +8,7 @@ import { perPage } from '../config';
 
 // to get counts keystone.js framework provides meta shortcuts with underscores
 // in this case _all<EntityNamePlural>Meta which you can get a count prop on
-const PAGINATION_QUERY = gql`
+export const PAGINATION_QUERY = gql`
   query {
     _allProductsMeta {
       count
