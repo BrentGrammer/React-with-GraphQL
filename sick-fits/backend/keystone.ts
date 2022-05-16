@@ -31,6 +31,13 @@ const { withAuth } = createAuth({
   identityField: 'email', // which field identifies the person, ie what do they login with
   secretField: 'password',
   initFirstItem: { fields: ['name', 'email', 'password'] }, // allows insertion of these without auth
+  // needed to set up reset password functionality provided by keystone
+  // this allows us to use the sendUserPasswordResetLink mutation on the client to get a token to use
+  passwordResetLink: {
+    async sendToken(args) {
+      console.log(args);
+    },
+  },
 });
 
 // keystone config
